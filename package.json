@@ -1,0 +1,27 @@
+{
+  "name": "typing-speed-arena",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "concurrently -n server,client -c yellow,white \"npm run dev -w server\" \"npm run dev -w client\"",
+    "build": "npm run build -w client",
+    "start": "npm run start -w server",
+    "start:prod": "npm run build && cross-env NODE_ENV=production npm run start -w server",
+    "test:race": "node tests/test-race.mjs",
+    "test:time": "node tests/test-time.mjs",
+    "test:e2e": "node tests/test-e2e.mjs"
+  },
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "cross-env": "^10.1.0",
+    "playwright-core": "^1.63.0"
+  }
+}

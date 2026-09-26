@@ -1,0 +1,57 @@
+:root {
+  --yellow: #ffc107;
+  --yellow-2: #ffd54f;
+  --yellow-deep: #f9a825;
+  --error: #e5332a;
+  --ok: #2e9e5b;
+
+  --bg: #ffffff;
+  --text: #17181c;
+  --text-dim: color-mix(in srgb, var(--text) 64%, var(--bg));
+  --text-faint: color-mix(in srgb, var(--text) 36%, var(--bg));
+  --line: color-mix(in srgb, var(--text) 12%, var(--bg));
+
+  --panel: color-mix(in srgb, var(--yellow) 6%, #ffffff);
+  --panel-2: color-mix(in srgb, var(--yellow) 14%, #ffffff);
+  --panel-3: color-mix(in srgb, var(--yellow) 30%, #ffffff);
+  --panel-gray: color-mix(in srgb, var(--yellow) 8%, #757a83);
+  --panel-dark: color-mix(in srgb, var(--yellow) 18%, #17181c);
+
+  --yellow-wash-5: color-mix(in srgb, var(--yellow) 5%, transparent);
+  --yellow-wash-12: color-mix(in srgb, var(--yellow) 12%, transparent);
+  --yellow-wash-24: color-mix(in srgb, var(--yellow) 24%, transparent);
+  --white-ov-70: color-mix(in srgb, #ffffff 70%, transparent);
+  --gray-ov-40: color-mix(in srgb, #5c616b 40%, transparent);
+  --black-ov-60: color-mix(in srgb, #17181c 60%, transparent);
+
+  --accent-text: #8a6300;
+  --on-yellow: #241a00;
+  --shadow: 0 10px 30px color-mix(in srgb, var(--black-ov-60) 22%, transparent);
+  --caret-color: var(--yellow-deep);
+}
+
+[data-theme='dark'] {
+  --bg: #141519;
+  --text: #f4f5f7;
+  --text-dim: color-mix(in srgb, var(--text) 62%, var(--bg));
+  --text-faint: color-mix(in srgb, var(--text) 34%, var(--bg));
+  --line: color-mix(in srgb, var(--text) 13%, var(--bg));
+
+  --panel: color-mix(in srgb, var(--yellow) 8%, #1a1c21);
+  --panel-2: color-mix(in srgb, var(--yellow) 16%, #1a1c21);
+  --panel-3: color-mix(in srgb, var(--yellow) 30%, #1a1c21);
+  --panel-gray: color-mix(in srgb, var(--yellow) 6%, #555a63);
+  --panel-dark: color-mix(in srgb, var(--yellow) 22%, #000000);
+
+  --yellow-wash-5: color-mix(in srgb, var(--yellow) 5%, transparent);
+  --yellow-wash-12: color-mix(in srgb, var(--yellow) 12%, transparent);
+  --yellow-wash-24: color-mix(in srgb, var(--yellow) 24%, transparent);
+  --white-ov-70: color-mix(in srgb, #ffffff 14%, transparent);
+  --gray-ov-40: color-mix(in srgb, #9aa0aa 26%, transparent);
+  --black-ov-60: color-mix(in srgb, #000000 60%, transparent);
+
+  --accent-text: var(--yellow-2);
+  --on-yellow: #241a00;
+  --shadow: 0 12px 34px color-mix(in srgb, #000000 45%, transparent);
+  --caret-color: var(--yellow);
+}
