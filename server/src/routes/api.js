@@ -5,7 +5,7 @@ import { dbReady } from '../config/db.js';
 import { rateLimit } from '../utils/rateLimit.js';
 
 const router = Router();
-const scoreLimit = rateLimit({ windowMs: 60_000, max: 30 });
+const scoreLimit = rateLimit({ windowMs: Number(process.env.SCORE_RATE_LIMIT_WINDOW_MS) || 60_000, max: Number(process.env.SCORE_RATE_LIMIT_MAX) || 30 });
 
 const MODE_KEY = /^[a-z]+(-\d{1,3})?$/;
 const NICK = /^[\w \-.]{2,20}$/;

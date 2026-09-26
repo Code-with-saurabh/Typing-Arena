@@ -10,6 +10,7 @@ import api from './routes/api.js';
 import { initSockets } from './sockets/rooms.js';
 import { connectDb, dbReady } from './config/db.js';
 import { rateLimit } from './utils/rateLimit.js';
+import { startKeepAlive } from './keepAlive.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT) || 47819;
@@ -34,7 +35,7 @@ if (!PROD || ORIGINS.length) {
   app.use(cors(PROD ? { origin: ORIGINS } : {}));
 }
 
-app.use('/api', rateLimit({ max: 300 }));
+app.use('/api', rateLimit({ windowMs: Number(process.env.API_RATE_LIMIT_WINDOW_MS) || 60_000, max: Number(process.env.API_RATE_LIMIT_MAX) || 300 }));
 app.use(express.json({ limit: '64kb' }));
 app.use('/api', api);
 app.use('/api', (req, res) => res.status(404).json({ error: 'not_found' }));
@@ -66,6 +67,8 @@ app.use((err, req, res, next) => {
 });
 
 const server = http.createServer(app);
+server.keepAliveTimeout = 65_000;
+server.headersTimeout = 66_000;
 const io = new Server(server, {
   cors: !PROD || ORIGINS.length ? { origin: ORIGINS.length ? ORIGINS : true, methods: ['GET', 'POST'] } : undefined,
   maxHttpBufferSize: 4096,
@@ -81,10 +84,20 @@ server.listen(PORT, () => {
   console.log(`typing-arena listening on http://0.0.0.0:${PORT} (${PROD ? 'production' : 'development'}, db: ${dbReady()})`);
 });
 
+const stopKeepAlive = startKeepAlive({
+  intervalMs: Number(process.env.KEEPALIVE_INTERVAL_MS ?? 300_000),
+  port: PORT,
+  logger: (msg) => console.log(msg),
+});
+
+process.on('uncaughtException', (err) => console.error('[kept-alive] uncaughtException:', err));
+process.on('unhandledRejection', (reason) => console.error('[kept-alive] unhandledRejection:', reason));
+
 let closing = false;
 function shutdown(signal) {
   if (closing) return;
   closing = true;
+  stopKeepAlive();
   console.log(`${signal} received, shutting down…`);
   const timer = setTimeout(() => process.exit(1), 5000);
   timer.unref();
