@@ -14,7 +14,8 @@ export default function App() {
 
   useEffect(() => {
     sfx.setEnabled(settings.sound);
-  }, [settings.sound]);
+    sfx.setKeySound(settings.keySound);
+  }, [settings.sound, settings.keySound]);
 
   return (
     <div className="app">

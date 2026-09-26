@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSettings } from '../context/SettingsContext.jsx';
 import { fetchStats } from '../utils/api.js';
+import { sfx, KEY_SOUND_IDS } from '../utils/sounds.js';
 
 export default function SettingsPage() {
   const settings = useSettings();
@@ -112,6 +113,24 @@ export default function SettingsPage() {
               <i />
               {settings.sound ? 'on' : 'off'}
             </button>
+          </label>
+          <label className="setting-row">
+            <span>key sound</span>
+            <div className="chip-group">
+              {KEY_SOUND_IDS.map((id) => (
+                <button
+                  key={id}
+                  type="button"
+                  className={`chip${settings.keySound === id ? ' active' : ''}`}
+                  onClick={() => {
+                    settings.set({ keySound: id });
+                    sfx.previewKey(id);
+                  }}
+                >
+                  {id}
+                </button>
+              ))}
+            </div>
           </label>
           <label className="setting-row">
             <span>default word pool</span>

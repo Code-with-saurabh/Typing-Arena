@@ -5,6 +5,7 @@ const KEY = 'typing-arena-settings';
 const DEFAULTS = {
   nickname: '',
   sound: true,
+  keySound: 'classic',
   theme: 'light',
   fontSize: 2,
   caret: 'line',
